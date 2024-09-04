@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photo Selection</title>
+  <style>
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(6, auto);
+      /* Create 6 columns */
+      gap: 10px;
+    }
+
+    .grid-item {
+      cursor: pointer;
+      border: 4px solid transparent;
+      /* Default border is transparent */
+    }
+
+    .grid-item.selected {
+      border-color: orange;
+      /* Selected border color is orange */
+      border-width: 8px;
+      /* Make the border thick */
+    }
+  </style>
+  <script>
+    function togglePhotoSelection(photoId) {
+      const photoElement = document.getElementById(photoId);
+
+      // Toggle 'selected' class on clicked photo
+      photoElement.classList.toggle('selected');
+
+      // Update the hidden input field values
+      const selectedPhotosInput = document.getElementById('selectedPhotos');
+      let selectedPhotos = selectedPhotosInput.value ? selectedPhotosInput.value.split(',') : [];
+
+      if (photoElement.classList.contains('selected')) {
+        selectedPhotos.push(photoId);
+      } else {
+        selectedPhotos = selectedPhotos.filter(photo => photo !== photoId);
+      }
+
+      selectedPhotosInput.value = selectedPhotos.join(',');
+    }
+  </script>
+</head>
+
+<body>
+  <h1>Select Photos</h1>
+  <form method="POST">
+    <label for="username">Enter your username:</label>
+    <input type="text" id="username" name="username" required>
+    <div class="grid-container">
+      {% for image in images %}
+      <img id="{{ image }}" src="{{ url_for('static', filename='images/' + image) }}" class="grid-item"
+        onclick="togglePhotoSelection('{{ image }}')" width="200" height="200">
+      {% endfor %}
+    </div>
+    <input type="hidden" name="photo" id="selectedPhotos">
+    <button type="submit">Submit</button>
+  </form>
+</body>
+
+</html>
