@@ -8,8 +8,8 @@ app = Flask(__name__)
 # Directory to store results
 RESULTS_FILE = os.path.join('data', f'results.csv')
 
-# List of 100 images for a 6x5 grid
-images = [f'img{i:02}.png' for i in range(1, 101)]
+# List of 100 images
+images = os.listdir('static/images')
 
 # Ensure the results directory and file exist
 os.makedirs('data', exist_ok=True)
