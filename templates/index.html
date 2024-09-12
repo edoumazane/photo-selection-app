@@ -51,8 +51,8 @@
 <body>
   <h1>Select Photos</h1>
   <form method="POST">
-    <label for="username">Enter your username:</label>
-    <input type="text" id="username" name="username" required>
+    <label for="task">Enter task:</label>
+    <input type="text" id="task" name="task" required>
     <div class="grid-container">
       {% for image in images %}
       <img id="{{ image }}" src="{{ url_for('static', filename='images/' + image) }}" class="grid-item"
