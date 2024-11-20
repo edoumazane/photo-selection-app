@@ -6,46 +6,55 @@ from datetime import datetime
 app = Flask(__name__)
 
 # Directory to store results
-RESULTS_FILE = os.path.join('data', f'results.csv')
+RESULTS_FILE = os.path.join('results', f'results.csv')
 
-# List of 100 images
-images = os.listdir('static/images')
+# Directory to store images
+IMAGE_DIRECTORY = 'images'
+def load_images(directory):
+    """Load the image files from the specified directory."""
+    if os.path.exists("static/" + directory):
+        return os.listdir("static/" + directory)
+    return []
 
 # Ensure the results directory and file exist
-os.makedirs('data', exist_ok=True)
+os.makedirs('results', exist_ok=True)
 if not os.path.exists(RESULTS_FILE):
     with open(RESULTS_FILE, 'w', newline='') as f:
         writer = csv.writer(f, delimiter='\t')
-        writer.writerow(['Timestamp', 'Task', 'Selected Images'])
+        writer.writerow(['timestamp', 'task', 'image_dir', 'positive_images', 'negative_images'])
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+
+    global IMAGE_DIRECTORY
+    images = load_images(IMAGE_DIRECTORY)
+
     if request.method == 'POST':
-        # Get the task and selected photos from the form
+
+        if 'change_dir' in request.form:
+            # Handle directory change
+            new_directory = request.form.get('image_directory')
+            IMAGE_DIRECTORY = new_directory
+            images = load_images(IMAGE_DIRECTORY)
+            # Render the index.html template
+            return render_template('index.html', images=images, current_directory=IMAGE_DIRECTORY)
+
+        # Get the task and selected images from the form
         task = request.form.get('task')
-        selected_photos = request.form.getlist('photo')
+        positive_images = request.form.getlist('images')
         timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
         # Save the results to a CSV file
         with open(RESULTS_FILE, 'a', newline='') as f:
             writer = csv.writer(f, delimiter='\t')
-            writer.writerow([timestamp, task, ",".join(selected_photos)])
+            negative_images = [img for img in images if img not in positive_images]
+            writer.writerow([timestamp, task, IMAGE_DIRECTORY, ",".join(positive_images), ",".join(negative_images)])
 
-        # Redirect to the result page with selected photos
-        return redirect(url_for('result', photos=",".join(selected_photos), task=task, timestamp=timestamp))
+        # # Redirect to the result page with selected images
+        # return redirect(url_for('result', images=",".join(positive_images), task=task, timestamp=timestamp))
 
     # Render the index.html template
-    return render_template('index.html', images=images)
-
-@app.route('/result')
-def result():
-    # Get the selected photos, task, and timestamp from the query parameters
-    selected_photos = request.args.get('photos').split(',')
-    task = request.args.get('task')
-    timestamp = request.args.get('timestamp')
-
-    # Render the result.html template
-    return render_template('result.html', photos=selected_photos, task=task, timestamp=timestamp)
+    return render_template('index.html', images=images, current_directory=IMAGE_DIRECTORY)
 
 @app.route('/download')
 def download_csv():

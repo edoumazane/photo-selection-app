@@ -3,3 +3,7 @@
 **/*.pyc
 **/*.DS_Store
 **/*.ipynb_checkpoints
+static/*
+!static/example_folder
+!static/example_folder/*
+__pycache__

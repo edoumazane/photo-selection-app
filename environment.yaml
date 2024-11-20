@@ -1,0 +1,5 @@
+name: photo-selection-app
+dependencies:
+  - python=3.8
+  - Flask
+  - python-dotenv

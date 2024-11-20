@@ -50,18 +50,42 @@
 
 <body>
   <h1>Select Photos</h1>
-  <form method="POST">
-    <label for="task">Enter task:</label>
-    <input type="text" id="task" name="task" required>
-    <div class="grid-container">
-      {% for image in images %}
-      <img id="{{ image }}" src="{{ url_for('static', filename='images/' + image) }}" class="grid-item"
-        onclick="togglePhotoSelection('{{ image }}')" width="200" height="200">
-      {% endfor %}
-    </div>
-    <input type="hidden" name="photo" id="selectedPhotos">
-    <button type="submit">Submit</button>
+  <!-- Form to change the image directory -->
+  <form method="POST" action="/">
+    <label for="image_directory">Change Image Directory:</label>
+    <input type="text" id="image_directory" name="image_directory" placeholder="Enter new directory">
+    <button type="submit" name="change_dir">Change Directory</button>
   </form>
-</body>
 
-</html>
+  <!-- Current Image Directory -->
+  <h2>Current Directory: {{ current_directory }}</h2>
+
+  <!-- Form to select photos -->
+  <form method="POST">
+  <label for="task">Enter task:</label>
+  <input type="text" id="task" name="task" required>
+
+  <!-- Submit button -->
+  <button type="submit">Submit</button>
+  <br>
+
+  <!-- Download button -->
+  <br>
+  <a href="{{ url_for('download_csv') }}" class="button">Download CSV</a>
+  <br>
+
+  <!-- Image grid -->
+  <div class="grid-container">
+    {% for image in images %}
+    <img id="{{ image }}" src="{{ url_for('static', filename=current_directory + '/' + image) }}" class="grid-item"
+      onclick="togglePhotoSelection('{{ image }}')" width="224" height="224">
+    {% endfor %}
+  </div>
+
+  <!-- Hidden input to store selected photos -->
+  <input type="hidden" name="images" id="selectedPhotos">
+
+  </form>
+  </body>
+
+  </html>
