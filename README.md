@@ -1,10 +1,12 @@
 ## Overview
-
+Small web app for labeling based on 2D images.
 
 
 ## Install app
 
 ```bash
+cd ~/code
+git clone ...
 # Create a conda environment with Flask installed
 conda create -n photo-selection-app python=3.8 Flask python-dotenv
 # or
@@ -14,7 +16,7 @@ conda env create -f environment.yaml
 ```
 
 ## Prepare session
-Save images to be evaluated into one or subfolders in the `static` folder.
+Save images to be evaluated into one or several subfolders in the `static` folder.
 
 ## Optional: `ssh` command to browse the web app from a remote machine
 ```bash
@@ -34,14 +36,14 @@ flask run
 Then: `Ctrl` + click on the URL
 
 ## Perforn a task
-![webapp screenshot](assets/images/webapp_screenshot.png)
+![webapp-screenshot](assets/images/webapp-screenshot.png)
 - Specify the Image Directory you want to label.
 - Click on the images you want to select
 - Specify a name for the task
 - Click `Submit`
 
 ## Output
-![alt text](image-1.png)
+![tsv-table-screenshot](assets/images/tsv-table-screenshot.png)
 You can access the output `TSV` file in the `results` folder, or click the `Download TSV` hyperlink in the Web App
 
 

@@ -1,6 +1,8 @@
 **/*.csv
 **/*.tsv
 **/*.png
+!assets
+!assets/**/*
 **/*.pyc
 **/*.DS_Store
 **/*.ipynb_checkpoints
