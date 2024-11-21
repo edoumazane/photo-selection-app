@@ -1,4 +1,4 @@
-name: photo-selection-app
+name: image-selection-app
 dependencies:
   - python=3.8
   - Flask

@@ -8,9 +8,9 @@ Small web app for labeling based on 2D images.
 cd ~/code
 git clone ...
 # Create a conda environment with Flask installed
-conda create -n photo-selection-app python=3.8 Flask python-dotenv
+conda create -n image-selection-app python=3.8 Flask python-dotenv
 # or
-cd ~/code/photo-selection-app           # path to project directory
+cd ~/code/image-selection-app           # path to project directory
 conda env create -f environment.yaml
 #  or conda env update -f environment.yaml
 ```
@@ -27,8 +27,8 @@ echo "ssh ${USER}@${IP_ADDRESS} -L 5000:localhost:5000"
 
 ## Run app
 ```bash
-conda activate photo-selection-app
-cd ~/code/photo-selection-app           # path to project directory
+conda activate image-selection-app
+cd ~/code/image-selection-app           # path to project directory
 flask run
 # This will print a url to access the app from a browser
 ```
