@@ -1,3 +1,6 @@
+## Overview
+
+
 
 ## Install app
 
@@ -5,7 +8,7 @@
 # Create a conda environment with Flask installed
 conda create -n photo-selection-app python=3.8 Flask python-dotenv
 # or
-cd ~/code/edoumazane/photo-selection-app
+cd ~/code/photo-selection-app           # path to project directory
 conda env create -f environment.yaml
 #  or conda env update -f environment.yaml
 ```
@@ -16,23 +19,33 @@ Save images to be evaluated into one or subfolders in the `static` folder.
 ## Optional: `ssh` command to browse the web app from a remote machine
 ```bash
 # this prints the command that you need if you want 
-echo "ssh ${USER}@${IP_ADDRESS} -L 5000:localhost:5000"
+echo "ssh ${USER}@${IP_ADDRESS} -L 5000:localhost:5000" 
 # but you have to set the IP_ADDRESS shell env variable first (see below)
 ```
 
 ## Run app
 ```bash
 conda activate photo-selection-app
-cd ~/code/edoumazane/photo-selection-app
+cd ~/code/photo-selection-app           # path to project directory
 flask run
 # This will print a url to access the app from a browser
 ```
 
+Then: `Ctrl` + click on the URL
+
+## Perforn a task
+![webapp screenshot](assets/images/webapp_screenshot.png)
+- Specify the Image Directory you want to label.
+- Click on the images you want to select
+- Specify a name for the task
+- Click `Submit`
+
 ## Output
-You can access the output csv file in the `results` folder
+![alt text](image-1.png)
+You can access the output `TSV` file in the `results` folder, or click the `Download TSV` hyperlink in the Web App
 
 
-## Set the IP_ADRESS shell environment variable
+## Optional: set the IP_ADRESS shell environment variable
 ```bash
 # Run this:
 ifconfig | grep inet

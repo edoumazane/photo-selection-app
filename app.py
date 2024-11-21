@@ -6,7 +6,7 @@ from datetime import datetime
 app = Flask(__name__)
 
 # Directory to store results
-RESULTS_FILE = os.path.join('results', f'results.csv')
+RESULTS_FILE = os.path.join('results', f'results.tsv')
 
 # Directory to store images
 IMAGE_DIRECTORY = 'images'
@@ -57,7 +57,7 @@ def index():
     return render_template('index.html', images=images, current_directory=IMAGE_DIRECTORY)
 
 @app.route('/download')
-def download_csv():
+def download_tsv():
     return send_file(RESULTS_FILE, as_attachment=True)
 
 if __name__ == '__main__':
